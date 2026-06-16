@@ -1,0 +1,16 @@
+{
+  "name": "Virtum",
+  "short_name": "Virtum",
+  "lang": "ru",
+  "theme_color": "#050E1C",
+  "background_color": "#050E1C",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
