@@ -135,12 +135,12 @@
      CATALOG PREVIEW (shared by motion + fallback)
      ============================================================ */
   var CATALOGS = [
-    { ch: "ВИРТУМ · ЧАТ",     icon: "🍽️", name: "Паста Карбонара",   sub: "890 ₽ · большая порция",   bubble: "добавь карбонару и два латте",            out: "Заказ оформлен" },
-    { ch: "ВИРТУМ · САЙТ",    icon: "📦", name: "iPhone 15 Pro",       sub: "256 ГБ · в наличии",        bubble: "нужен айфон 15 про для юрлица, со счётом", out: "Счёт выставлен" },
-    { ch: "ВИРТУМ · ТЕЛЕФОН", icon: "✂️", name: "Стрижка + укладка",   sub: "60 мин · мастер Анна",      bubble: "запишите на стрижку в субботу днём",      out: "Запись подтверждена" },
-    { ch: "ВИРТУМ · ЧАТ",     icon: "🏠", name: "2-комн · 75 м²",       sub: "Центр · 18 млн ₽",          bubble: "можно посмотреть квартиру в среду?",      out: "Показ назначен" },
-    { ch: "ВИРТУМ · ПОЧТА",   icon: "🏨", name: "Номер Делюкс",        sub: "15–18 июня · 2 гостя",      bubble: "забронируйте делюкс на три ночи",         out: "Бронь подтверждена" },
-    { ch: "ВИРТУМ · SMS",     icon: "🚲", name: "Велосипед горный",    sub: "3 дня · залог 5 000 ₽",     bubble: "арендую велосипед на выходные",           out: "Аренда оформлена" }
+    { ch: "Чат на сайте",   agent: "Паста Карбонара — 890 ₽. Добавить в заказ?",        user: "да, и два латте",            done: "Заказ оформлен, курьер через 40 минут" },
+    { ch: "Сайт",           agent: "iPhone 15 Pro 256 ГБ — в наличии. Оформить?",        user: "да, на юрлицо со счётом",    done: "Счёт выставлен, отправил на почту" },
+    { ch: "Телефон",        agent: "Стрижка у мастера Анны, 60 минут. Подобрать время?", user: "запишите на субботу днём",   done: "Записал на субботу, 14:00" },
+    { ch: "Чат на сайте",   agent: "2-комн · 75 м², центр, 18 млн ₽. Показать?",          user: "можно посмотреть в среду?", done: "Показ назначен на среду, 18:00" },
+    { ch: "Почта",          agent: "Делюкс на 15–18 июня — свободен. Бронируем?",         user: "да, на двоих",               done: "Бронь подтверждена, ваучер на почте" },
+    { ch: "SMS",            agent: "Горный велосипед — 3 дня, залог 5 000 ₽. Оформить?", user: "да, заберу завтра",          done: "Аренда оформлена, ждём завтра" }
   ];
   var catActive = -1;
   function renderCatalog(i, animate) {
@@ -149,10 +149,9 @@
     if (!body) return;
     if (label) label.textContent = c.ch;
     body.innerHTML =
-      '<div class="cat-row"><span class="cat-row__icon">' + c.icon + '</span>' +
-        '<div class="cat-row__mid"><div class="cat-row__name">' + c.name + '</div><div class="cat-row__sub">' + c.sub + '</div></div></div>' +
-      '<div class="cat-bubble">«' + c.bubble + '»</div>' +
-      '<div class="cat-outcome">' + c.out + '</div>';
+      '<div class="row row--agent"><div class="bubble">' + c.agent + '</div></div>' +
+      '<div class="row row--user"><div class="bubble">' + c.user + '</div></div>' +
+      '<div class="row row--agent"><div class="bubble bubble--done">' + c.done + '</div></div>';
     $$(".cat-item").forEach(function (it, k) { it.classList.toggle("is-active", k === i); });
     if (animate) { body.classList.remove("swap"); void body.offsetWidth; body.classList.add("swap"); }
   }
