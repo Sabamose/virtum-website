@@ -17,174 +17,100 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ============================================================
-     LIVE AGENT ANIMATION (hero panel)
+     CHAT WIDGET (hero) — animated Wiil-style conversation
      ============================================================ */
-  function initAgent() {
-    var root = $("#agent-panel");
+  function initChat() {
+    var root = $("#chat-panel");
     if (!root) return;
 
-    var TASKS = [
-      { icon: "🍽️", type: "РЕСТОРАН", accent: "#00C8D4", title: "Novikov Restaurant", detail: "4 персоны · пятница 20:00",
-        input: "хочу стол на 4 в новикове в пятницу вечером",
-        steps: ["Анализ намерения", "Поиск свободных слотов", "Резервация #T-4471", "Отправка подтверждения"],
-        durations: [700, 1100, 950, 600],
-        output: "Готово! Столик на 4 в Novikov\nПятница, 20:00 · Бронь NV-44721\nПодтверждение отправлено ✓" },
-      { icon: "✈️", type: "АВИАБИЛЕТЫ", accent: "#4ECDE4", title: "SU-270 Москва → Дубай", detail: "2 пасс. · 18 июня 10:45",
-        input: "купи 2 билета москва дубай на следующей неделе подешевле",
-        steps: ["Поиск рейсов (14 вар.)", "Сравнение тарифов", "Бронирование SU-270", "Оформление билетов"],
-        durations: [900, 800, 750, 520],
-        output: "Куплено: SU-270 МСК→ДХБ\n18 июня 10:45 · Места 14C, 14D\n42 800 ₽ · Билеты на почте ✓" },
-      { icon: "📦", type: "ЗАКАЗ ТОВАРА", accent: "#007B8A", title: "iPhone 15 Pro × 3 шт.", detail: "256GB · Чёрный титан",
-        input: "нужно 3 айфона 15 про 256гб для сотрудников оплата юрлицо",
-        steps: ["Проверка наличия", "Формирование B2B-заявки", "Согласование с поставщиком", "Подтверждение отгрузки"],
-        durations: [650, 1000, 1200, 680],
-        output: "Заявка принята! iPhone 15 Pro × 3\nСчёт №2847 на 269 700 ₽ отправлен\nДоставка: 17 июня (завтра) ✓" },
-      { icon: "🏨", type: "БРОНЬ ОТЕЛЯ", accent: "#00C8D4", title: "Отель Метрополь", detail: "2 номера · 15–18 июня",
-        input: "забронируй 2 стандартных номера в метрополе с 15 по 18 июня",
-        steps: ["Проверка доступности", "Выбор категории номеров", "Резервация 2× Стандарт", "Ваучеры и подтверждение"],
-        durations: [780, 720, 900, 580],
-        output: "Забронировано: Метрополь\n2× Стандарт · 15–18 июня\nБронь MT-28441 · Ваучеры отправлены ✓" },
-      { icon: "🏥", type: "МЕДИЦИНА", accent: "#4ECDE4", title: "Медси · Терапевт", detail: "Д-р Смирнова · завтра 14:00",
-        input: "запишись к терапевту в медси на завтра после обеда желательно",
-        steps: ["Поиск доступных слотов", "Выбор времени: 14:00", "Запись к д-р Смирновой", "СМС-напоминание пациенту"],
-        durations: [700, 600, 820, 500],
-        output: "Записано: Медси · Терапевт\nД-р Смирнова · завтра 14:00 · каб. 205\nНапоминание за 2 часа настроено ✓" }
+    var LOGO = "/assets/logo.svg";
+    var BIZ = "Novikov";
+    var d = new Date(), pad = function (n) { return n < 10 ? "0" + n : "" + n; };
+    var TIME = pad(d.getHours()) + ":" + pad(d.getMinutes());
+
+    var SCRIPT = [
+      { who: "agent", text: "Здравствуйте! Я Аура, ассистент Novikov. Чем могу помочь?" },
+      { who: "user",  text: "столик на 4 в пятницу вечером" },
+      { who: "agent", text: "Есть свободный стол в пятницу на 20:00. Забронировать на 4 гостей?" },
+      { who: "user",  text: "да, давай" },
+      { who: "agent", text: "Готово! Столик на 4, пятница 20:00. Подтверждение отправил в SMS. Ждём вас!" }
     ];
 
-    var state = {
-      counter: 12847,
-      taskIndex: 0,
-      completed: [
-        { type: "АВИАБИЛЕТЫ", title: "SU-270 МСК→ДХБ", time: "14:21:38", dur: "2.1с" },
-        { type: "ЗАКАЗ",      title: "MacBook Pro × 2", time: "14:21:25", dur: "3.4с" },
-        { type: "ОТЕЛЬ",      title: "Four Seasons · 5н", time: "14:21:09", dur: "2.8с" }
-      ]
-    };
-
-    var timers = [];
-    function after(ms, fn) { var t = setTimeout(fn, ms); timers.push(t); return t; }
-    var stepTimer = null;
-
-    root.innerHTML =
-      '<div class="agent__bar">' +
-        '<div class="agent__dots"><i></i><i></i><i></i></div>' +
-        '<div class="agent__title">ВИРТУМ · ИИ-АГЕНТ</div>' +
-        '<div class="agent__live"><i></i><span id="ag-count"></span></div>' +
-      '</div>' +
-      '<div class="agent__body">' +
-        '<div class="agent__main" id="ag-main"></div>' +
-        '<div class="agent__feed" id="ag-feed"></div>' +
-      '</div>';
-
-    var elCount = $("#ag-count", root), elMain = $("#ag-main", root), elFeed = $("#ag-feed", root);
-    var refs = {};
-    function setCount() { elCount.textContent = ruNum(state.counter) + " задач"; }
-    function task() { return TASKS[Math.max(0, state.taskIndex - 1) % TASKS.length]; }
     function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
 
-    function renderFeed(freshFirst) {
-      var rows = state.completed.slice(0, 5).map(function (c, i) {
-        var fresh = i === 0 && freshFirst;
-        return '<div class="agent__done' + (fresh ? " is-fresh" : "") + '">' +
-          '<div class="agent__done-top"><span class="agent__done-check">✓</span><span class="agent__done-type">' + esc(c.type) + '</span></div>' +
-          '<div class="agent__done-title">' + esc(c.title) + '</div>' +
-          '<div class="agent__done-meta"><span class="agent__done-time">' + c.time + '</span><span class="agent__done-dur">' + c.dur + '</span></div>' +
-        '</div>';
-      }).join("");
-      elFeed.innerHTML = '<div class="agent__feed-label">ВЫПОЛНЕНО</div>' + rows;
-    }
+    var callSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.6a1 1 0 011 1 11 11 0 00.56 3.5 1 1 0 01-.25 1z"/></svg>';
+    var expandSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 21h5v-5M3 21l7-7M21 3l-7 7"/></svg>';
+    var closeSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var sendSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4l17.5-7.5a1 1 0 000-1.8L3.4 3.6a1 1 0 00-1.4 1l2 6.4 9 1-9 1-2 6.4a1 1 0 001.4 1z"/></svg>';
 
-    function layoutIdle() {
-      elMain.innerHTML =
-        '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">' +
-          '<div style="width:32px;height:32px;border-radius:50%;border:2px solid rgba(0,200,212,.2);display:flex;align-items:center;justify-content:center">' +
-            '<div style="width:10px;height:10px;border-radius:50%;background:#00C8D4;animation:pulse 1.5s ease-in-out infinite"></div></div>' +
-          '<div style="font-size:13px;color:rgba(237,244,250,.25)">Агент готов к работе…</div>' +
-        '</div>';
-    }
+    root.innerHTML =
+      '<div class="chat__head">' +
+        '<div class="chat__avatar"><img src="' + LOGO + '" alt=""><i></i></div>' +
+        '<div class="chat__id"><div class="chat__name">' + BIZ + '</div>' +
+          '<div class="chat__role"><span class="chat__badge">AI</span><span>Ассистент</span></div></div>' +
+        '<button class="chat__call" aria-label="Звонок">' + callSvg + 'Звонок</button>' +
+        '<div class="chat__icons">' + expandSvg + closeSvg + '</div>' +
+      '</div>' +
+      '<div class="chat__body" id="chat-body"></div>' +
+      '<div class="chat__input"><div class="chat__field"><span class="chat__field-text" id="chat-field">Введите сообщение…</span>' +
+        '<span class="chat__send" id="chat-send">' + sendSvg + '</span></div></div>' +
+      '<div class="chat__foot">Работает на <b>Виртум</b></div>';
 
-    function layoutTask() {
-      var t = task(), stepsHtml = "";
-      for (var i = 0; i < 4; i++) {
-        stepsHtml += '<div class="agent__step" data-i="' + i + '"><div class="agent__step-ic"><i></i></div>' +
-          '<span class="agent__step-label">' + esc(t.steps[i]) + '</span><span class="agent__step-tail">—</span></div>';
-      }
-      elMain.innerHTML =
-        '<div class="agent__task" style="border-left-color:' + t.accent + '"><span class="agent__task-icon">' + t.icon + '</span>' +
-          '<div class="agent__task-mid"><div class="agent__task-type" style="color:' + t.accent + '">' + esc(t.type) + '</div>' +
-            '<div class="agent__task-title">' + esc(t.title) + '</div><div class="agent__task-detail">' + esc(t.detail) + '</div></div>' +
-          '<div class="agent__task-id">#' + ruNum(state.counter - 1) + '</div></div>' +
-        '<div class="agent__input" hidden><div class="agent__block-label">▸ ВХОДЯЩИЙ ЗАПРОС</div>' +
-          '<div class="agent__input-text"><span id="ag-in"></span><span class="agent__cursor" id="ag-in-cur">|</span></div></div>' +
-        '<div class="agent__steps" hidden><div class="agent__block-label">▸ ОБРАБОТКА</div>' + stepsHtml + '</div>' +
-        '<div class="agent__output" hidden><div class="agent__block-label">▸ ОТВЕТ АГЕНТА</div>' +
-          '<div class="agent__output-text"><span id="ag-out"></span><span class="agent__output-cursor" id="ag-out-cur">▋</span></div></div>';
-      refs.input = $(".agent__input", elMain); refs.inText = $("#ag-in", elMain); refs.inCur = $("#ag-in-cur", elMain);
-      refs.steps = $(".agent__steps", elMain); refs.stepEls = $$(".agent__step", elMain);
-      refs.output = $(".agent__output", elMain); refs.outText = $("#ag-out", elMain); refs.outCur = $("#ag-out-cur", elMain);
-    }
-
-    function setStep(i, status, pct) {
-      var row = refs.stepEls[i]; if (!row) return;
-      row.className = "agent__step" + (status === "active" ? " is-active" : status === "done" ? " is-done" : "");
-      var ic = $(".agent__step-ic", row), tail = $(".agent__step-tail", row);
-      if (status === "done") { ic.innerHTML = "✓"; tail.textContent = "✓"; }
-      else if (status === "active") { ic.innerHTML = "<i></i>"; tail.innerHTML = '<span class="agent__step-bar"><i style="width:' + (pct || 0) + '%"></i></span>'; }
-      else { ic.innerHTML = "<i></i>"; tail.textContent = "—"; }
-    }
-
-    function startTask() {
-      clearInterval(stepTimer);
-      var idx = state.taskIndex % TASKS.length; state.taskIndex = idx + 1;
-      layoutTask(); after(480, typeInput);
-    }
-    function typeInput() {
-      var full = task().input, i = 0; refs.input.hidden = false; refs.inCur.style.display = "";
-      (function tick() {
-        if (i <= full.length) { refs.inText.textContent = full.slice(0, i++); after(24 + Math.random() * 18, tick); }
-        else { refs.inCur.style.display = "none"; after(380, startSteps); }
-      })();
-    }
-    function startSteps() { refs.steps.hidden = false; runStep(0); }
-    function runStep(idx) {
-      var dur = task().durations[idx], frameMs = 33, total = Math.round(dur / frameMs), frame = 0;
-      setStep(idx, "active", 0);
-      for (var k = 0; k < 4; k++) { if (k < idx) setStep(k, "done"); else if (k > idx) setStep(k, "pending"); }
-      if (idx === 2) after(dur * 0.35, typeOutput);
-      clearInterval(stepTimer);
-      var fill = refs.stepEls[idx].querySelector(".agent__step-bar i");
-      stepTimer = setInterval(function () {
-        frame++; var pct = Math.min(100, Math.round((frame / total) * 100));
-        if (fill) fill.style.width = pct + "%";
-        if (pct >= 100) { clearInterval(stepTimer); setStep(idx, "done");
-          if (idx < 3) after(160, function () { runStep(idx + 1); }); else after(650, completeTask); }
-      }, frameMs);
-    }
-    function typeOutput() {
-      refs.output.hidden = false; refs.outCur.style.display = "";
-      var full = task().output, i = 0;
-      (function tick() { if (i <= full.length) { refs.outText.textContent = full.slice(0, i++); after(14 + Math.random() * 10, tick); } })();
-    }
-    function completeTask() {
-      refs.outCur.style.display = "none";
-      var t = task(), now = new Date();
-      var ts = now.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-      var dur = (2.0 + Math.random() * 3.2).toFixed(1) + "с";
-      state.completed = [{ type: t.type, title: t.title, time: ts, dur: dur }].concat(state.completed.slice(0, 5));
-      renderFeed(true); after(1300, startTask);
-    }
-
-    setCount(); renderFeed(false);
+    var body = $("#chat-body", root), field = $("#chat-field", root), send = $("#chat-send", root);
+    function scrollDown() { body.scrollTop = body.scrollHeight; }
+    function agentBubble(text) { return '<div class="bubble">' + esc(text) + '</div><div class="row__meta"><span class="row__meta-av"><img src="' + LOGO + '" alt=""></span>' + TIME + '</div>'; }
+    function userBubble(text) { return '<div class="bubble">' + esc(text) + '</div><div class="row__meta">' + TIME + '</div>'; }
 
     if (prefersReduced) {
-      state.taskIndex = 1; layoutTask();
-      refs.input.hidden = false; refs.inCur.style.display = "none"; refs.inText.textContent = TASKS[0].input;
-      refs.steps.hidden = false; for (var s = 0; s < 4; s++) setStep(s, "done");
-      refs.output.hidden = false; refs.outCur.style.display = "none"; refs.outText.textContent = TASKS[0].output;
+      var html = "";
+      SCRIPT.forEach(function (s) { html += '<div class="row row--' + s.who + '">' + (s.who === "agent" ? agentBubble(s.text) : userBubble(s.text)) + '</div>'; });
+      body.innerHTML = html; scrollDown();
       return;
     }
-    setInterval(function () { if (document.hidden) return; if (Math.random() > 0.55) { state.counter++; setCount(); } }, 320);
-    layoutIdle(); after(600, startTask);
+
+    function timeout(ms, fn) { setTimeout(fn, ms); }
+
+    function addAgent(text, done) {
+      var row = document.createElement("div");
+      row.className = "row row--agent";
+      row.innerHTML = '<div class="typing"><i></i><i></i><i></i></div>';
+      body.appendChild(row); scrollDown();
+      timeout(1100, function () {
+        row.innerHTML = agentBubble(text); scrollDown();
+        if (done) timeout(750, done);
+      });
+    }
+    function addUser(text, done) {
+      field.classList.add("has-text");
+      var i = 0;
+      (function tick() {
+        if (i <= text.length) { field.innerHTML = esc(text.slice(0, i++)) + '<span class="chat__caret">|</span>'; timeout(45, tick); }
+        else {
+          field.innerHTML = esc(text);
+          send.classList.add("is-active");
+          timeout(320, function () {
+            field.textContent = "Введите сообщение…"; field.classList.remove("has-text"); send.classList.remove("is-active");
+            var row = document.createElement("div");
+            row.className = "row row--user";
+            row.innerHTML = userBubble(text);
+            body.appendChild(row); scrollDown();
+            if (done) timeout(850, done);
+          });
+        }
+      })();
+    }
+
+    function run() {
+      body.innerHTML = "";
+      field.textContent = "Введите сообщение…"; field.classList.remove("has-text"); send.classList.remove("is-active");
+      var i = 0;
+      (function next() {
+        if (i >= SCRIPT.length) { timeout(3800, run); return; }
+        var step = SCRIPT[i++];
+        if (step.who === "agent") addAgent(step.text, next); else addUser(step.text, next);
+      })();
+    }
+    timeout(500, run);
   }
 
   /* ============================================================
@@ -378,13 +304,12 @@
      iPHONE CALL UI
      ============================================================ */
   function initCallUI() {
-    var wave = $("#call-wave");
-    if (wave) {
+    $$(".call__wave").forEach(function (wave) {
       var n = 26, html = "";
       for (var i = 0; i < n; i++) html += '<i style="--i:' + i + '"></i>';
       wave.innerHTML = html;
-    }
-    var timerEl = $("#call-timer"), capEl = $("#call-caption");
+    });
+    var capEl = $("#call-caption");
     var lines = [
       "Здравствуйте! Чем могу помочь?",
       "Столик на 4 в пятницу, 20:00 — нашёл свободный.",
@@ -392,14 +317,15 @@
       "Что-нибудь ещё? Хорошего вечера!"
     ];
     if (prefersReduced) { if (capEl) capEl.textContent = lines[2]; return; }
-    if (timerEl) {
-      var sec = 14;
+    // tick every call timer from its own data-start
+    $$(".call__timer").forEach(function (el) {
+      var sec = parseInt(el.getAttribute("data-start"), 10) || 0;
       setInterval(function () {
         if (document.hidden) return;
         sec++; var m = Math.floor(sec / 60), s = sec % 60;
-        timerEl.textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+        el.textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
       }, 1000);
-    }
+    });
     if (capEl) {
       var li = 0;
       (function typeLine() {
@@ -460,6 +386,15 @@
   }
 
   /* ── Dashboard: count-ups + sparkline draw (motion path) ─ */
+  function countUp(gsap, el) {
+    if (!el || el._done) return;
+    el._done = true;
+    var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+    var suffix = el.getAttribute("data-suffix") || "";
+    var obj = { v: 0 };
+    gsap.to(obj, { v: target, duration: 1.4, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(obj.v).toLocaleString("ru-RU") + suffix; } });
+  }
+
   function dashboardScene(gsap, ScrollTrigger) {
     $$(".kpi__spark path").forEach(function (p) { gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1 }); });
     ScrollTrigger.batch(".kpi", {
@@ -468,21 +403,17 @@
         batch.forEach(function (card) {
           var p = card.querySelector(".kpi__spark path");
           if (p) gsap.to(p, { strokeDashoffset: 0, duration: 1.2, ease: "power2.out" });
-          var el = card.querySelector(".kpi__val");
-          if (el && !el._done) {
-            el._done = true;
-            var target = parseInt(el.getAttribute("data-count"), 10) || 0;
-            var suffix = el.getAttribute("data-suffix") || "";
-            var obj = { v: 0 };
-            gsap.to(obj, { v: target, duration: 1.4, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(obj.v).toLocaleString("ru-RU") + suffix; } });
-          }
+          countUp(gsap, card.querySelector(".kpi__val"));
         });
       }
     });
+    if ($(".cstat__num")) {
+      ScrollTrigger.batch(".cstat__num", { start: "top 88%", onEnter: function (batch) { batch.forEach(function (el) { countUp(gsap, el); }); } });
+    }
   }
 
   /* ── Boot ─────────────────────────────────────────────── */
-  function init() { initAgent(); initNav(); initCallUI(); initAudioPlayers(); initMotion(); }
+  function init() { initChat(); initNav(); initCallUI(); initAudioPlayers(); initMotion(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

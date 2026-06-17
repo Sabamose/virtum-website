@@ -56,7 +56,8 @@
   <div class="nav__links">
     <a href="#catalogs" class="nav-link">Каталоги</a>
     <a href="#platform" class="nav-link">Платформа</a>
-    <a href="#how" class="nav-link">Как это работает</a>
+    <a href="#integrations" class="nav-link">Интеграции</a>
+    <a href="#developer" class="nav-link">Разработчикам</a>
     <a href="#contact" class="nav-link">Контакты</a>
   </div>
   <div class="nav__cta">
@@ -71,7 +72,8 @@
 <div class="mobile-menu" id="mobile-menu" hidden>
   <a href="#catalogs" class="mobile-menu__link">Каталоги</a>
   <a href="#platform" class="mobile-menu__link">Платформа</a>
-  <a href="#how" class="mobile-menu__link">Как это работает</a>
+  <a href="#integrations" class="mobile-menu__link">Интеграции</a>
+  <a href="#developer" class="mobile-menu__link">Разработчикам</a>
   <a href="#contact" class="mobile-menu__link">Контакты</a>
   <a href="#contact" class="btn btn--teal mobile-menu__cta">Запросить демо</a>
 </div>
@@ -117,7 +119,7 @@
 
     <div class="hero__visual">
       <div class="hero__float">
-        <div id="agent-panel" class="agent" role="img" aria-label="Демонстрация работы ИИ-агента Виртум в реальном времени"></div>
+        <div id="chat-panel" class="chat" role="img" aria-label="Демонстрация чат-агента Виртум"></div>
       </div>
     </div>
   </div>
@@ -315,7 +317,7 @@
             <div class="call__top">
               <div class="call__avatar">N</div>
               <div class="call__name">Novikov Restaurant</div>
-              <div class="call__state"><span class="call__dot"></span>Виртум · ИИ-агент · <span id="call-timer">00:14</span></div>
+              <div class="call__state"><span class="call__dot"></span>Виртум · ИИ-агент · <span id="call-timer" class="call__timer" data-start="14">00:14</span></div>
             </div>
 
             <div class="call__wave" id="call-wave" aria-hidden="true"></div>
@@ -334,6 +336,78 @@
               <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21 15.5c-1.2 0-2.4-.2-3.5-.6a1 1 0 00-1 .3l-1.5 1.5a14 14 0 01-6.2-6.2L10.3 9a1 1 0 00.2-1A11 11 0 019.9 4.5 1 1 0 009 3.6H5.4a1 1 0 00-1 1.1A16.5 16.5 0 0019.3 19.6a1 1 0 001.1-1V16.5a1 1 0 00-.9-1z" transform="rotate(135 12 12)"/></svg>
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTBOUND: campaigns (iPhone outbound + campaign panel) ── -->
+<section id="outbound" class="outbound">
+  <div class="outbound__head reveal">
+    <div class="eyebrow">ИСХОДЯЩИЕ КАМПАНИИ</div>
+    <h2 class="section-title">Агент звонит первым.</h2>
+    <p class="outbound__sub">Загрузите базу — агент сам обзванивает клиентов, напоминает, возвращает и записывает. Сотни звонков параллельно, по расписанию и в рабочие часы.</p>
+  </div>
+
+  <div class="outbound__layout">
+    <div class="outbound__device reveal">
+      <div class="phone" role="img" aria-label="Исходящий звонок ИИ-агента Виртум">
+        <span class="phone__island"></span>
+        <div class="phone__screen">
+          <div class="call">
+            <div class="call__status">
+              <span class="call__time">12:08</span>
+              <span class="call__sys">
+                <span class="call__signal"><i></i><i></i><i></i><i></i></span>
+                <svg class="call__wifi" width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true"><path d="M8 11.2a1.1 1.1 0 100-2.2 1.1 1.1 0 000 2.2zM4.6 7.9l1.3 1.3a3 3 0 014.2 0l1.3-1.3a4.8 4.8 0 00-6.8 0zM2 5.3l1.3 1.3a7 7 0 019.4 0L14 5.3a8.8 8.8 0 00-12 0z"/></svg>
+                <span class="call__batt"><b></b></span>
+              </span>
+            </div>
+            <div class="call__top">
+              <div class="call__avatar">М</div>
+              <div class="call__name">Мария Орлова</div>
+              <div class="call__state"><span class="call__dot"></span>Исходящий · <span class="call__timer" data-start="32">00:32</span></div>
+            </div>
+            <div class="call__wave" aria-hidden="true"></div>
+            <div class="call__caption">«Здравствуйте, Мария! Звоню из Novikov — у нас есть стол на пятницу, забронировать?»</div>
+            <div class="call__controls">
+              <button class="call__ctrl" aria-label="Без звука"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a3 3 0 00-3 3v6a3 3 0 006 0V6a3 3 0 00-3-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>звук</span></button>
+              <button class="call__ctrl" aria-label="Клавиатура"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><span>цифры</span></button>
+              <button class="call__ctrl" aria-label="Динамик"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>динамик</span></button>
+              <button class="call__ctrl" aria-label="Добавить"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg><span>добавить</span></button>
+              <button class="call__ctrl" aria-label="Удержать"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.4" height="12" rx="1.2"/><rect x="13.6" y="6" width="3.4" height="12" rx="1.2"/></svg><span>пауза</span></button>
+              <button class="call__ctrl" aria-label="Контакты"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0113 0z"/></svg><span>контакт</span></button>
+            </div>
+            <button class="call__end" aria-label="Завершить звонок">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21 15.5c-1.2 0-2.4-.2-3.5-.6a1 1 0 00-1 .3l-1.5 1.5a14 14 0 01-6.2-6.2L10.3 9a1 1 0 00.2-1A11 11 0 019.9 4.5 1 1 0 009 3.6H5.4a1 1 0 00-1 1.1A16.5 16.5 0 0019.3 19.6a1 1 0 001.1-1V16.5a1 1 0 00-.9-1z" transform="rotate(135 12 12)"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="outbound__campaign reveal">
+      <div class="campaign">
+        <div class="campaign__head">
+          <div>
+            <div class="campaign__name">Кампания «Возврат клиентов»</div>
+            <div class="campaign__meta">Обзвон базы · 500 контактов</div>
+          </div>
+          <span class="campaign__live"><i></i>в эфире</span>
+        </div>
+        <div class="campaign__bar"><span class="campaign__bar-fill" style="width:49%"></span></div>
+        <div class="campaign__progress">Набрано <b>247</b> из 500</div>
+        <div class="campaign__stats">
+          <div class="cstat"><div class="cstat__num" data-count="189">189</div><div class="cstat__label">дозвонились</div></div>
+          <div class="cstat"><div class="cstat__num" data-count="64">64</div><div class="cstat__label">записаны</div></div>
+          <div class="cstat"><div class="cstat__num" data-count="31">31</div><div class="cstat__label">перезвонить</div></div>
+        </div>
+        <div class="campaign__list">
+          <div class="crow"><span class="crow__who">Мария Орлова</span><span class="crow__pill crow__pill--ok">Записана</span></div>
+          <div class="crow"><span class="crow__who">Игорь Петров</span><span class="crow__pill crow__pill--live"><i></i>звонит…</span></div>
+          <div class="crow"><span class="crow__who">Анна Смирнова</span><span class="crow__pill">Перезвонить</span></div>
+          <div class="crow"><span class="crow__who">Дмитрий Климов</span><span class="crow__pill crow__pill--ok">Записан</span></div>
         </div>
       </div>
     </div>
@@ -478,6 +552,67 @@
   <p class="listen__note reveal">Записи появятся здесь — место под реальные разговоры уже готово.</p>
 </section>
 
+<!-- INTEGRATIONS ──────────────────────────────────────── -->
+<section id="integrations" class="integ">
+  <div class="integ__head reveal">
+    <div class="eyebrow">ИНТЕГРАЦИИ</div>
+    <h2 class="section-title">Работает с вашими каналами<br>и системами.</h2>
+    <p class="integ__sub">Подключайте мессенджеры и бизнес-системы. Новые интеграции добавляем каждый месяц.</p>
+  </div>
+
+  <div class="integ__group reveal">
+    <div class="integ__group-title">КАНАЛЫ</div>
+    <div class="integ__grid">
+      <div class="itile">
+        <div class="itile__icon" style="background:#229ED9"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21.9 4.3l-3.3 15.5c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.3-.1-.5-.6-.2L6.2 13.3l-4.8-1.5c-1-.3-1-1 .2-1.5L20.6 2.9c.9-.3 1.6.2 1.3 1.4z"/></svg></div>
+        <div class="itile__name">Telegram</div>
+        <span class="itile__badge itile__badge--on">Подключено</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#25D366"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 2a8 8 0 11-4.2 14.8l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 0112 4zm-2.7 4c-.2 0-.5 0-.7.4-.3.4-1 1-1 2.4s1 2.8 1.2 3 2 3.2 5 4.4c2.5 1 3 .8 3.5.7.6 0 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4l-1-.5c-.4-.2-1.5-.7-1.7-.8-.2 0-.4-.1-.6.2l-.8 1c-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2s0-.4.1-.6l.5-.5.3-.5v-.5c0-.2-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4z"/></svg></div>
+        <div class="itile__name">WhatsApp</div>
+        <span class="itile__badge itile__badge--on">Подключено</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#0077FF;font-weight:800;font-size:13px;color:#fff">VK</div>
+        <div class="itile__name">ВКонтакте</div>
+        <span class="itile__badge itile__badge--on">Подключено</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#00AAFF;font-weight:800;font-size:11px;color:#fff">av</div>
+        <div class="itile__name">Авито</div>
+        <span class="itile__badge">Скоро</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="integ__group reveal">
+    <div class="integ__group-title">СИСТЕМЫ</div>
+    <div class="integ__grid">
+      <div class="itile">
+        <div class="itile__icon" style="background:#1A8FE3;font-weight:800;font-size:12px;color:#fff">МС</div>
+        <div class="itile__name">МойСклад</div>
+        <span class="itile__badge">Скоро</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#0098E3;font-weight:800;font-size:11px;color:#fff">B24</div>
+        <div class="itile__name">Bitrix24</div>
+        <span class="itile__badge">Скоро</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#2BA6F7;font-weight:800;font-size:11px;color:#fff">amo</div>
+        <div class="itile__name">amoCRM</div>
+        <span class="itile__badge">Скоро</span>
+      </div>
+      <div class="itile">
+        <div class="itile__icon" style="background:#FFCC00;font-weight:800;font-size:13px;color:#1A1A1A">1С</div>
+        <div class="itile__name">1С</div>
+        <span class="itile__badge">Скоро</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- DIFFERENTIATOR ───────────────────────────────────── -->
 <section id="diff" class="diff">
   <div class="diff__inner">
@@ -497,6 +632,55 @@
         <div class="diff__bot"><span class="diff__tag">ОБЫЧНЫЙ БОТ</span>«Мы вам перезвоним»</div>
         <svg class="diff__arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="diff__agent"><span class="diff__tag diff__tag--on">АГЕНТ ВИРТУМ</span>Отвечает мгновенно — даже в 2 ночи</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVELOPERS ─────────────────────────────────────────── -->
+<section id="developer" class="dev">
+  <div class="dev__inner">
+    <div class="dev__copy reveal">
+      <div class="eyebrow eyebrow--light">РАЗРАБОТЧИКАМ</div>
+      <h2 class="section-title section-title--light">Вся инфраструктура —<br>через один API.</h2>
+      <p class="dev__sub">Каталоги, локации, агенты и сделки — единый API и SDK. Запускайте голосовых и чат-агентов за минуты, а не месяцы.</p>
+      <div class="dev__caps">
+        <span class="dev__cap">REST API</span>
+        <span class="dev__cap">Webhooks</span>
+        <span class="dev__cap">WebSocket</span>
+        <span class="dev__cap">SDK · TypeScript</span>
+        <span class="dev__cap">SDK · Python</span>
+      </div>
+      <div class="dev__actions">
+        <a href="#contact" class="btn btn--teal btn--lg magnetic">
+          Получить API-ключ
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8.5 4l3 3-3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://docs.virtum.ru" class="btn btn--outline btn--lg" target="_blank" rel="noopener">Документация</a>
+      </div>
+    </div>
+
+    <div class="dev__code reveal">
+      <div class="code">
+        <div class="code__bar">
+          <span class="code__dots"><i></i><i></i><i></i></span>
+          <span class="code__file">deploy-agent.ts</span>
+        </div>
+<pre class="code__body"><span class="tk-k">import</span> { VirtumClient } <span class="tk-k">from</span> <span class="tk-s">'virtum-js'</span>;
+
+<span class="tk-k">const</span> client = <span class="tk-k">new</span> <span class="tk-fn">VirtumClient</span>({
+  apiKey: process.env.<span class="tk-fn">VIRTUM_API_KEY</span>,
+});
+
+<span class="tk-c">// Запускаем голосового агента</span>
+<span class="tk-k">const</span> agent = <span class="tk-k">await</span> client.phoneAgent.<span class="tk-fn">create</span>({
+  name: <span class="tk-s">'Аура'</span>,
+  catalogId: <span class="tk-s">'cat_123'</span>,
+  locationId: <span class="tk-s">'loc_456'</span>,
+  capabilities: [<span class="tk-s">'BOOKING'</span>, <span class="tk-s">'ORDERS'</span>],
+});
+
+console.<span class="tk-fn">log</span>(<span class="tk-s">'Номер агента:'</span>, agent.phoneNumber);</pre>
       </div>
     </div>
   </div>
