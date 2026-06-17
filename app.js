@@ -313,18 +313,13 @@
   }
 
   function storyScene(gsap, ScrollTrigger) {
-    var story = $("#story"), panels = $$("#story .story__panel"), chips = $$("#story .story__chip");
-    var timeEl = $("#story-time"), hand = $(".story__clock-hand");
+    var story = $("#story"), panels = $$("#story .story__panel"), notes = $$("#story .note");
     if (!story) return;
-    var TIMES = ["21:00", "02:00", "24/7"], HANDS = [-42, 150, 0];
     var cur = -1;
     function setStep(i) {
       if (i === cur) return; cur = i;
       panels.forEach(function (p, k) { p.classList.toggle("is-active", k === i); });
-      chips.forEach(function (c, k) { c.classList.toggle("is-on", k === i); });
-      if (timeEl) timeEl.textContent = TIMES[i];
-      if (hand) hand.style.transform = "translate(-50%,0) rotate(" + HANDS[i] + "deg)";
-      story.classList.toggle("is-standard", i === 2);
+      notes.forEach(function (n, k) { n.classList.toggle("is-on", k === i); });
     }
     var mm = gsap.matchMedia();
     mm.add("(min-width: 921px)", function () {
@@ -334,7 +329,7 @@
         trigger: story, start: "top top", end: "+=240%", pin: ".story__pin", anticipatePin: 1,
         onUpdate: function (self) { setStep(Math.min(2, Math.floor(self.progress * 2.999))); }
       });
-      return function () { story.classList.remove("is-pinned", "is-standard"); cur = -1; st.kill(); };
+      return function () { story.classList.remove("is-pinned"); cur = -1; st.kill(); };
     });
   }
 

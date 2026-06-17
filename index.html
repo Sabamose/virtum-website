@@ -132,15 +132,31 @@
 <section id="story" class="story">
   <div class="story__pin">
     <div class="story__stage" aria-hidden="true">
-      <div class="story__clock">
-        <div class="story__clock-time" id="story-time">21:00</div>
-        <div class="story__clock-ring"><span class="story__clock-hand"></span></div>
-        <div class="story__pulse"></div>
-      </div>
-      <div class="story__chips">
-        <span class="story__chip" data-c="0">Чат</span>
-        <span class="story__chip" data-c="1">Звонок</span>
-        <span class="story__chip" data-c="2">Виртум</span>
+      <div class="notes">
+        <div class="note" data-c="0">
+          <div class="note__icon">💬</div>
+          <div class="note__body">
+            <div class="note__top"><span class="note__app">Чат на сайте</span><span class="note__time">21:00</span></div>
+            <div class="note__text">«Можно столик на 4 на завтра вечером?»</div>
+            <div class="note__status">Не в сети — ответим утром</div>
+          </div>
+        </div>
+        <div class="note" data-c="1">
+          <div class="note__icon">📞</div>
+          <div class="note__body">
+            <div class="note__top"><span class="note__app">Пропущенный вызов</span><span class="note__time">02:00</span></div>
+            <div class="note__text">+7 916 ••• •• 14</div>
+            <div class="note__status">Голосовая почта · 0:08</div>
+          </div>
+        </div>
+        <div class="note note--virtum" data-c="2">
+          <div class="note__icon note__icon--virtum"><img src="/assets/logo.svg" width="18" height="20" alt=""></div>
+          <div class="note__body">
+            <div class="note__top"><span class="note__app">Виртум ответил</span><span class="note__time">сразу</span></div>
+            <div class="note__text">Готово! Столик на 4 забронирован.</div>
+            <div class="note__status note__status--ok">Подтверждение отправлено в SMS ✓</div>
+          </div>
+        </div>
       </div>
     </div>
 
