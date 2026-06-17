@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Virtum">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#39D7EC"/><stop offset="1" stop-color="#0091A6"/></linearGradient></defs>
-  <polygon points="5,0 34,0 50,58 50,94" fill="#16294A"/>
-  <polygon points="95,0 66,0 50,58 50,94" fill="url(#g)"/>
-  <polygon points="95,0 66,0 50,30 74,40" fill="#39D7EC" opacity=".85"/>
-  <line x1="95" y1="0" x2="50" y2="94" stroke="#7FF0FF" stroke-width="2.5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 262 282" fill="none" role="img" aria-label="Virtum">
+  <polygon points="18,28 90,28 130,266 104,266" fill="#162E50"/>
+  <polygon points="172,28 244,28 158,266 130,266" fill="#00B4C8"/>
+  <polygon points="18,28 90,28 85,16 23,16" fill="#4ECDE4" opacity="0.9"/>
+  <polygon points="172,28 244,28 239,16 177,16" fill="#4ECDE4" opacity="0.9"/>
 </svg>
