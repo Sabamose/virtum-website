@@ -266,6 +266,7 @@
       storyScene(gsap, ScrollTrigger);
       fanScene(gsap, ScrollTrigger);
       catalogScene(gsap, ScrollTrigger, lenis);
+      dashboardScene(gsap, ScrollTrigger);
       progressBar(ScrollTrigger);
       if (canHover) magnetic(gsap);
       window.addEventListener("load", function () { ScrollTrigger.refresh(); });
@@ -378,8 +379,115 @@
     });
   }
 
+  /* ============================================================
+     iPHONE CALL UI
+     ============================================================ */
+  function initCallUI() {
+    var wave = $("#call-wave");
+    if (wave) {
+      var n = 26, html = "";
+      for (var i = 0; i < n; i++) html += '<i style="--i:' + i + '"></i>';
+      wave.innerHTML = html;
+    }
+    var timerEl = $("#call-timer"), capEl = $("#call-caption");
+    var lines = [
+      "Здравствуйте! Чем могу помочь?",
+      "Столик на 4 в пятницу, 20:00 — нашёл свободный.",
+      "Готово. Бронь подтверждена, отправил SMS.",
+      "Что-нибудь ещё? Хорошего вечера!"
+    ];
+    if (prefersReduced) { if (capEl) capEl.textContent = lines[2]; return; }
+    if (timerEl) {
+      var sec = 14;
+      setInterval(function () {
+        if (document.hidden) return;
+        sec++; var m = Math.floor(sec / 60), s = sec % 60;
+        timerEl.textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+      }, 1000);
+    }
+    if (capEl) {
+      var li = 0;
+      (function typeLine() {
+        var full = lines[li % lines.length]; li++; var i = 0;
+        (function tick() {
+          if (i <= full.length) { capEl.textContent = full.slice(0, i++); setTimeout(tick, 26); }
+          else { setTimeout(typeLine, 2600); }
+        })();
+      })();
+    }
+  }
+
+  /* ============================================================
+     AUDIO PLAYERS (real audio if present, else demo animation)
+     ============================================================ */
+  function initAudioPlayers() {
+    // Flip to true once real recordings exist at the data-audio paths
+    // (/assets/audio/*.mp3). Until then players run a silent demo animation.
+    var AUDIO_READY = false;
+    var BARS = 34;
+    $$(".audio").forEach(function (card) {
+      var wave = $(".audio__wave", card);
+      if (wave) {
+        var html = "";
+        for (var i = 0; i < BARS; i++) {
+          var h = 22 + Math.round(Math.abs(Math.sin(i * 0.7)) * 64 + (i % 3) * 8);
+          if (h > 100) h = 100;
+          html += '<i style="--i:' + i + ';--h:' + h + '%"></i>';
+        }
+        wave.innerHTML = html;
+      }
+      var btn = $(".audio__play", card);
+      var src = card.getAttribute("data-audio");
+      var dur = parseInt(card.getAttribute("data-dur"), 10) || 20;
+
+      function stop() {
+        card.classList.remove("is-playing");
+        if (card._audio) card._audio.pause();
+        if (card._demo) { clearTimeout(card._demo); card._demo = null; }
+      }
+      function runDemo() { if (card._demo) return; card._demo = setTimeout(stop, dur * 1000); }
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        if (card.classList.contains("is-playing")) { stop(); return; }
+        $$(".audio").forEach(function (o) { if (o !== card) { o.classList.remove("is-playing"); if (o._audio) o._audio.pause(); if (o._demo) { clearTimeout(o._demo); o._demo = null; } } });
+        card.classList.add("is-playing");
+        if (src && AUDIO_READY) {
+          if (!card._audio) {
+            card._audio = new Audio(src);
+            card._audio.addEventListener("ended", stop);
+            card._audio.addEventListener("error", runDemo);
+          }
+          var p = card._audio.play();
+          if (p && p.catch) p.catch(runDemo);
+        } else { runDemo(); }
+      });
+    });
+  }
+
+  /* ── Dashboard: count-ups + sparkline draw (motion path) ─ */
+  function dashboardScene(gsap, ScrollTrigger) {
+    $$(".kpi__spark path").forEach(function (p) { gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1 }); });
+    ScrollTrigger.batch(".kpi", {
+      start: "top 85%",
+      onEnter: function (batch) {
+        batch.forEach(function (card) {
+          var p = card.querySelector(".kpi__spark path");
+          if (p) gsap.to(p, { strokeDashoffset: 0, duration: 1.2, ease: "power2.out" });
+          var el = card.querySelector(".kpi__val");
+          if (el && !el._done) {
+            el._done = true;
+            var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+            var suffix = el.getAttribute("data-suffix") || "";
+            var obj = { v: 0 };
+            gsap.to(obj, { v: target, duration: 1.4, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(obj.v).toLocaleString("ru-RU") + suffix; } });
+          }
+        });
+      }
+    });
+  }
+
   /* ── Boot ─────────────────────────────────────────────── */
-  function init() { initAgent(); initNav(); initMotion(); }
+  function init() { initAgent(); initNav(); initCallUI(); initAudioPlayers(); initMotion(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -54,8 +54,8 @@
     <span class="nav__word">ВИРТУМ</span>
   </a>
   <div class="nav__links">
-    <a href="#story" class="nav-link">Проблема</a>
-    <a href="#catalogs" class="nav-link">Платформа</a>
+    <a href="#catalogs" class="nav-link">Каталоги</a>
+    <a href="#platform" class="nav-link">Платформа</a>
     <a href="#how" class="nav-link">Как это работает</a>
     <a href="#contact" class="nav-link">Контакты</a>
   </div>
@@ -69,8 +69,8 @@
 </nav>
 
 <div class="mobile-menu" id="mobile-menu" hidden>
-  <a href="#story" class="mobile-menu__link">Проблема</a>
-  <a href="#catalogs" class="mobile-menu__link">Платформа</a>
+  <a href="#catalogs" class="mobile-menu__link">Каталоги</a>
+  <a href="#platform" class="mobile-menu__link">Платформа</a>
   <a href="#how" class="mobile-menu__link">Как это работает</a>
   <a href="#contact" class="mobile-menu__link">Контакты</a>
   <a href="#contact" class="btn btn--teal mobile-menu__cta">Запросить демо</a>
@@ -258,6 +258,208 @@
       </li>
     </ol>
   </div>
+</section>
+
+<!-- PLATFORM: phone call (iPhone frame + Call UI) ───────── -->
+<section id="platform" class="platform">
+  <div class="platform__inner">
+    <div class="platform__copy reveal">
+      <div class="eyebrow eyebrow--light">ТЕЛЕФОННЫЙ КАНАЛ</div>
+      <h2 class="section-title section-title--light">Агент берёт трубку.<br>И доводит до сделки.</h2>
+      <p class="platform__sub">Звонок в 2 ночи или в час пик — агент отвечает за секунду, говорит живым голосом, понимает с полуслова и оформляет заказ прямо в разговоре.</p>
+      <ul class="platform__points">
+        <li>Естественный голос, 20+ языков</li>
+        <li>Отвечает мгновенно, без очереди и удержания</li>
+        <li>Бронирует, заказывает и записывает — в звонке</li>
+      </ul>
+      <div class="platform__chips" aria-label="Каналы">
+        <span class="ch-chip is-on">Телефон</span>
+        <span class="ch-chip">Сайт</span>
+        <span class="ch-chip">Чат</span>
+        <span class="ch-chip">SMS</span>
+        <span class="ch-chip">Почта</span>
+      </div>
+    </div>
+
+    <div class="platform__device reveal">
+      <div class="phone" role="img" aria-label="ИИ-агент Виртум во время телефонного звонка">
+        <span class="phone__island"></span>
+        <div class="phone__screen">
+          <!-- frame slot: replace this .call block with a screenshot/video later -->
+          <div class="call">
+            <div class="call__status">
+              <span class="call__time">12:08</span>
+              <span class="call__sys">
+                <span class="call__signal"><i></i><i></i><i></i><i></i></span>
+                <svg class="call__wifi" width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true"><path d="M8 11.2a1.1 1.1 0 100-2.2 1.1 1.1 0 000 2.2zM4.6 7.9l1.3 1.3a3 3 0 014.2 0l1.3-1.3a4.8 4.8 0 00-6.8 0zM2 5.3l1.3 1.3a7 7 0 019.4 0L14 5.3a8.8 8.8 0 00-12 0z"/></svg>
+                <span class="call__batt"><b></b></span>
+              </span>
+            </div>
+
+            <div class="call__top">
+              <div class="call__avatar">N</div>
+              <div class="call__name">Novikov Restaurant</div>
+              <div class="call__state"><span class="call__dot"></span>Виртум · ИИ-агент · <span id="call-timer">00:14</span></div>
+            </div>
+
+            <div class="call__wave" id="call-wave" aria-hidden="true"></div>
+            <div class="call__caption" id="call-caption">Слушаю вас…</div>
+
+            <div class="call__controls">
+              <button class="call__ctrl" aria-label="Без звука"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a3 3 0 00-3 3v6a3 3 0 006 0V6a3 3 0 00-3-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>звук</span></button>
+              <button class="call__ctrl" aria-label="Клавиатура"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><span>цифры</span></button>
+              <button class="call__ctrl" aria-label="Динамик"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>динамик</span></button>
+              <button class="call__ctrl" aria-label="Добавить"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg><span>добавить</span></button>
+              <button class="call__ctrl" aria-label="Удержать"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="6" width="3.4" height="12" rx="1.2"/><rect x="13.6" y="6" width="3.4" height="12" rx="1.2"/></svg><span>пауза</span></button>
+              <button class="call__ctrl" aria-label="Контакты"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0113 0z"/></svg><span>контакт</span></button>
+            </div>
+
+            <button class="call__end" aria-label="Завершить звонок">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M21 15.5c-1.2 0-2.4-.2-3.5-.6a1 1 0 00-1 .3l-1.5 1.5a14 14 0 01-6.2-6.2L10.3 9a1 1 0 00.2-1A11 11 0 019.9 4.5 1 1 0 009 3.6H5.4a1 1 0 00-1 1.1A16.5 16.5 0 0019.3 19.6a1 1 0 001.1-1V16.5a1 1 0 00-.9-1z" transform="rotate(135 12 12)"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD (browser frame + swappable slot) ──────────── -->
+<section id="dashboard" class="dashboard">
+  <div class="dashboard__head reveal">
+    <div class="eyebrow">ПАНЕЛЬ УПРАВЛЕНИЯ</div>
+    <h2 class="section-title">Все разговоры и сделки —<br>на одном экране.</h2>
+    <p class="dashboard__sub">Каждый звонок, чат и заказ — в одной панели. Видно, о чём спрашивают, что продаётся и где агент передал диалог человеку.</p>
+  </div>
+
+  <figure class="frame reveal">
+    <div class="frame__chrome">
+      <span class="frame__dots"><i></i><i></i><i></i></span>
+      <span class="frame__url">app.virtum.ru / диалоги</span>
+    </div>
+    <div class="frame__slot">
+      <!-- frame slot: replace this .dash block with a screenshot/video later -->
+      <div class="dash">
+        <aside class="dash__side">
+          <div class="dash__brand"><img src="/assets/logo.svg" width="18" height="20" alt=""><span>ВИРТУМ</span></div>
+          <nav class="dash__nav">
+            <span class="dash__navitem is-on"><span class="dash__navdot"></span>Диалоги</span>
+            <span class="dash__navitem">Каталог</span>
+            <span class="dash__navitem">Аналитика</span>
+            <span class="dash__navitem">Интеграции</span>
+            <span class="dash__navitem">Настройки</span>
+          </nav>
+          <div class="dash__agent">
+            <span class="dash__agent-dot"></span>
+            <div><div class="dash__agent-name">Агент активен</div><div class="dash__agent-sub">5 каналов · 24/7</div></div>
+          </div>
+        </aside>
+
+        <main class="dash__main">
+          <div class="dash__kpis">
+            <div class="kpi">
+              <div class="kpi__label">Разговоров сегодня</div>
+              <div class="kpi__val" data-count="1248">1 248</div>
+              <svg class="kpi__spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0,26 L17,22 L34,24 L51,15 L68,18 L85,9 L102,12 L120,4"/></svg>
+              <div class="kpi__trend">▲ 18%</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi__label">Сделок</div>
+              <div class="kpi__val" data-count="327">327</div>
+              <svg class="kpi__spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0,24 L17,25 L34,18 L51,20 L68,12 L85,14 L102,7 L120,6"/></svg>
+              <div class="kpi__trend">▲ 23%</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi__label">Конверсия</div>
+              <div class="kpi__val" data-count="71" data-suffix="%">71%</div>
+              <svg class="kpi__spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0,22 L17,20 L34,21 L51,16 L68,15 L85,11 L102,10 L120,8"/></svg>
+              <div class="kpi__trend">▲ 6%</div>
+            </div>
+          </div>
+
+          <div class="dash__inbox">
+            <div class="dash__inbox-head"><span>Канал</span><span>Клиент</span><span>Запрос</span><span>Статус</span></div>
+            <div class="dash__row">
+              <span class="dash__ch">📞 Звонок</span><span class="dash__who">Novikov</span>
+              <span class="dash__snip">Столик на 4, пятница 20:00</span>
+              <span class="dash__pill dash__pill--ok">Бронь оформлена</span>
+            </div>
+            <div class="dash__row">
+              <span class="dash__ch">💬 Чат</span><span class="dash__who">М. Орлова</span>
+              <span class="dash__snip">iPhone 15 Pro, оплата юрлицом</span>
+              <span class="dash__pill dash__pill--ok">Счёт выставлен</span>
+            </div>
+            <div class="dash__row">
+              <span class="dash__ch">✉️ Почта</span><span class="dash__who">Метрополь</span>
+              <span class="dash__snip">2 номера, 15–18 июня</span>
+              <span class="dash__pill">В работе</span>
+            </div>
+            <div class="dash__row">
+              <span class="dash__ch">📱 SMS</span><span class="dash__who">Д. Климов</span>
+              <span class="dash__snip">Запись к терапевту на завтра</span>
+              <span class="dash__pill dash__pill--ok">Запись создана</span>
+            </div>
+            <div class="dash__row">
+              <span class="dash__ch">📞 Звонок</span><span class="dash__who">А. Петров</span>
+              <span class="dash__snip">Аренда велосипеда на выходные</span>
+              <span class="dash__pill dash__pill--warn">Передан менеджеру</span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </figure>
+</section>
+
+<!-- LISTEN: audio samples ───────────────────────────────── -->
+<section id="listen" class="listen">
+  <div class="listen__head reveal">
+    <div class="eyebrow">ЖИВЫЕ РАЗГОВОРЫ</div>
+    <h2 class="section-title">Послушайте, как говорит агент.</h2>
+    <p class="listen__sub">Три реальных сценария. Нажмите play.</p>
+  </div>
+
+  <div class="listen__grid">
+    <article class="audio reveal" data-audio="/assets/audio/restoran.mp3" data-dur="24">
+      <button class="audio__play" aria-label="Слушать: бронь столика">
+        <svg class="audio__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+        <svg class="audio__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.5" y="3" width="3" height="10" rx="1"/><rect x="9.5" y="3" width="3" height="10" rx="1"/></svg>
+      </button>
+      <div class="audio__mid">
+        <div class="audio__title">Бронь столика</div>
+        <div class="audio__sub">Ресторан · входящий звонок</div>
+        <div class="audio__wave" aria-hidden="true"></div>
+      </div>
+      <div class="audio__time">0:24</div>
+    </article>
+
+    <article class="audio reveal" data-audio="/assets/audio/zakaz.mp3" data-dur="31">
+      <button class="audio__play" aria-label="Слушать: заказ товара">
+        <svg class="audio__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+        <svg class="audio__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.5" y="3" width="3" height="10" rx="1"/><rect x="9.5" y="3" width="3" height="10" rx="1"/></svg>
+      </button>
+      <div class="audio__mid">
+        <div class="audio__title">Заказ товара</div>
+        <div class="audio__sub">Ритейл · чат на сайте</div>
+        <div class="audio__wave" aria-hidden="true"></div>
+      </div>
+      <div class="audio__time">0:31</div>
+    </article>
+
+    <article class="audio reveal" data-audio="/assets/audio/zapis.mp3" data-dur="19">
+      <button class="audio__play" aria-label="Слушать: запись на приём">
+        <svg class="audio__icon-play" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+        <svg class="audio__icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.5" y="3" width="3" height="10" rx="1"/><rect x="9.5" y="3" width="3" height="10" rx="1"/></svg>
+      </button>
+      <div class="audio__mid">
+        <div class="audio__title">Запись на приём</div>
+        <div class="audio__sub">Клиника · звонок</div>
+        <div class="audio__wave" aria-hidden="true"></div>
+      </div>
+      <div class="audio__time">0:19</div>
+    </article>
+  </div>
+  <p class="listen__note reveal">Записи появятся здесь — место под реальные разговоры уже готово.</p>
 </section>
 
 <!-- DIFFERENTIATOR ───────────────────────────────────── -->
