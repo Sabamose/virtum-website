@@ -224,10 +224,19 @@
   function heroIntro(gsap) {
     var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     tl.fromTo(".hero .badge", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: .7 }, .1)
-      .fromTo(".hero .line__inner", { yPercent: 115 }, { yPercent: 0, duration: 1.05, stagger: .1, ease: "power4.out" }, .15)
+      .from(".hero .line__inner", { yPercent: 115, duration: 1.05, stagger: .1, ease: "power4.out" }, .15)
       .fromTo([".hero__sub", ".hero__claim", ".hero__actions", ".hero__meta"], { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .09 }, .45)
       .fromTo(".hero__float", { opacity: 0, y: 30, scale: .98 }, { opacity: 1, y: 0, scale: 1, duration: 1 }, .3)
       .fromTo(".hero__scroll", { opacity: 0 }, { opacity: 1, duration: .6 }, 1.1);
+    // Safety net: the H1 must never stay hidden if the intro stalls or the tab
+    // was backgrounded during load. Kill any in-flight tweens so they can't
+    // re-assert a stalled value, then force the hero fully visible.
+    setTimeout(function () {
+      gsap.killTweensOf([".hero .line__inner", ".hero .reveal", ".hero__float"]);
+      gsap.set(".hero .line__inner", { clearProps: "transform" }); // no CSS hidden state → visible
+      gsap.set(".hero .reveal", { opacity: 1, y: 0 });
+      gsap.set(".hero__float", { opacity: 1, y: 0, scale: 1 });
+    }, 1600);
   }
 
   function revealAll(gsap, ScrollTrigger) {
@@ -239,13 +248,30 @@
   }
 
   function storyScene(gsap, ScrollTrigger) {
-    var story = $("#story"), panels = $$("#story .story__panel"), notes = $$("#story .note");
+    var story = $("#story"), panels = $$("#story .story__panel");
     if (!story) return;
+    var lock = $("#lock"), lockTime = $("#lock-time"), lkNotes = $$("#story .lk-note");
     var cur = -1;
     function setStep(i) {
       if (i === cur) return; cur = i;
       panels.forEach(function (p, k) { p.classList.toggle("is-active", k === i); });
-      notes.forEach(function (n, k) { n.classList.toggle("is-on", k === i); });
+      lkNotes.forEach(function (el) { el.classList.remove("is-shown", "is-dim", "is-active", "is-resolved"); });
+      if (lock) lock.classList.remove("is-resolving");
+      if (!lkNotes.length) return;
+      if (i === 0) {
+        if (lockTime) lockTime.textContent = "21:00";
+        lkNotes[0].classList.add("is-shown", "is-active");
+      } else if (i === 1) {
+        if (lockTime) lockTime.textContent = "02:00";
+        lkNotes[0].classList.add("is-shown", "is-dim");
+        lkNotes[1].classList.add("is-shown", "is-active");
+      } else {
+        if (lockTime) lockTime.textContent = "21:00";
+        lkNotes[0].classList.add("is-shown", "is-resolved");
+        lkNotes[1].classList.add("is-shown", "is-resolved");
+        lkNotes[2].classList.add("is-shown", "is-active");
+        if (lock) lock.classList.add("is-resolving");
+      }
     }
     var mm = gsap.matchMedia();
     mm.add("(min-width: 921px)", function () {
